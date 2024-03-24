@@ -18,10 +18,6 @@ func main() {
 	verbose := false
 
 	// Add verbose Flags
-	// verbose := flag.Bool("verbose", false, "Print out output when invoked")
-	// verboseShortHand := flag.Bool("v", false, "Print out output when invoked")
-	// readme := flag.Bool("readme", false, "Creates a README.md file")
-	// readmeShortHand := flag.Bool("re", false, "Creates a README.md file")
 	flag.BoolFunc("verbose", "Print out output when invoked", func (s string) error {
 		verbose = true
 		return nil
@@ -35,9 +31,8 @@ func main() {
 
 	flag.Parse()
 
-	// Adding a for each loop and switch to check for flags
+	// Adding a for each loop to find args that contains a "/"
 	for i := 0; i < flag.NArg(); i++ {
-		// var sentence string
 		args := flag.Arg(i)
 		if strings.Contains(args, "/"){
 			// sentence = args
@@ -46,26 +41,6 @@ func main() {
 				log.Fatal(err)
 			}
 		}
-		// Add file go.mod file
-		// switch args{
-			// case "--verbose":
-			// 	*verbose = true
-			// case "-v":
-			// 	*verboseShortHand = true
-			// Readme flags
-			// case "--readme":
-			// 	*readme = true
-			// 	fmt.Println("Readme is : ", *readme)
-			// case "-re":
-			// 	*readmeShortHand = true
-			// 	fmt.Println("Readme is : ", *readmeShortHand)
-			// Added a go mod init case 
-		// 	case sentence:
-		// 		cmd := exec.Command("go", "mod", "init", sentence)
-		// 		if err := cmd.Run(); err != nil {
-		// 			log.Fatal(err)
-		// 		}
-		// }
 	}
 
 	// Get current working directory
@@ -91,8 +66,6 @@ func main() {
 			f.WriteString("package main")
 			defer f.Close()
 		}
-
-		// if *verbose || *verboseShortHand{
 		if verbose{
 			fmt.Printf("Added %s directory.\n", file)
 		}
