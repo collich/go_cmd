@@ -72,6 +72,11 @@ func main() {
 	}
 
 	// Read Directory after reading
+	ReadCreatedDir(filepath)
+
+}
+
+func ReadCreatedDir(filepath string) {
 	files, err := os.ReadDir(filepath)
 	if err != nil {
 		log.Fatal(err)
@@ -83,7 +88,6 @@ func main() {
 			fmt.Println(file.Name())
 		}
 	}
-
 }
 
 func CreateREADME(s string) error {
