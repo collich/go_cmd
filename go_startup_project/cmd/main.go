@@ -20,6 +20,16 @@ func main() {
 
 	flag.Parse()
 
+	// Adding a for each loop and switch to check for flags
+	for i := 0; i < flag.NArg(); i++ {
+		switch flag.Arg(i){
+			case "--verbose":
+				*verbose = true
+			case "-v":
+				*verboseShortHand = true
+		}
+	}
+
 	// Get current working directory
 	filepath, err := os.Getwd()
 	if err != nil{
