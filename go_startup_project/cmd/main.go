@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/fs"
 	"log"
@@ -12,6 +13,12 @@ func main() {
 	// Hard 
 	files_add := []string{"bin", "cmd", "internal", "tests"}
 	file_perm := 751
+
+	// Add verbose Flags
+	verbose := flag.Bool("verbose", false, "Print out output when invoked")
+	verboseShortHand := flag.Bool("v", false, "Print out output when invoked")
+
+	flag.Parse()
 
 	// Get current working directory
 	filepath, err := os.Getwd()
@@ -26,7 +33,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("Added %s folder.\n", file)
+		if *verbose || *verboseShortHand{
+			fmt.Printf("Added %s folder.\n", file)
+		}
 	}
 
 	// Read Directory after reading
