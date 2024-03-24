@@ -19,8 +19,10 @@ func main() {
 	// Add verbose Flags
 	verbose := flag.Bool("verbose", false, "Print out output when invoked")
 	verboseShortHand := flag.Bool("v", false, "Print out output when invoked")
-	readme := flag.Bool("readme", false, "Creates a README.md file")
-	readmeShortHand := flag.Bool("re", false, "Creates a README.md file")
+	// readme := flag.Bool("readme", false, "Creates a README.md file")
+	// readmeShortHand := flag.Bool("re", false, "Creates a README.md file")
+	flag.BoolFunc("readme", "Creates a README.md file", CreateREADME)
+	flag.BoolFunc("re", "Creates a README.md file", CreateREADME)
 
 	flag.Parse()
 
@@ -38,12 +40,12 @@ func main() {
 			case "-v":
 				*verboseShortHand = true
 			// Readme flags
-			case "--readme":
-				*readme = true
-				fmt.Println("Readme is : ", *readme)
-			case "-re":
-				*readmeShortHand = true
-				fmt.Println("Readme is : ", *readmeShortHand)
+			// case "--readme":
+			// 	*readme = true
+			// 	fmt.Println("Readme is : ", *readme)
+			// case "-re":
+			// 	*readmeShortHand = true
+			// 	fmt.Println("Readme is : ", *readmeShortHand)
 			// Added a go mod init case 
 			case sentence:
 				cmd := exec.Command("go", "mod", "init", sentence)
@@ -95,4 +97,15 @@ func main() {
 		}
 	}
 
+}
+
+func CreateREADME(s string) error {
+	f, err := os.Create("README.md")
+	if err != nil {
+		log.Fatal(err)
+	}
+	f.WriteString("# README")
+	defer f.Close()
+	return nil
+	
 }
