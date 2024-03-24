@@ -6,11 +6,13 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"os/exec"
+	"strings"
 )
 
 
 func main() {
-	// Hard 
+	// Variables declaration
 	files_add := []string{"bin", "cmd", "internal", "tests"}
 	file_perm := 0751
 
@@ -22,11 +24,23 @@ func main() {
 
 	// Adding a for each loop and switch to check for flags
 	for i := 0; i < flag.NArg(); i++ {
-		switch flag.Arg(i){
+		var sentence string
+		args := flag.Arg(i)
+		if strings.Contains(args, "/"){
+			sentence = args
+		}
+		// Add file go.mod file
+		switch args{
 			case "--verbose":
 				*verbose = true
 			case "-v":
 				*verboseShortHand = true
+			// Added a go mod init case 
+			case sentence:
+				cmd := exec.Command("go", "mod", "init", sentence)
+				if err := cmd.Run(); err != nil {
+					log.Fatal(err)
+				}
 		}
 	}
 
@@ -38,6 +52,7 @@ func main() {
 
 	// Add Directory after getting current directory
 	for _, file := range files_add{
+
 		total_path := filepath + "/" +file
 		err := os.Mkdir(total_path, fs.FileMode(file_perm))
 		if err != nil {
