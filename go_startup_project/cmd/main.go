@@ -12,7 +12,7 @@ import (
 func main() {
 	// Hard 
 	files_add := []string{"bin", "cmd", "internal", "tests"}
-	file_perm := 751
+	file_perm := 0751
 
 	// Add verbose Flags
 	verbose := flag.Bool("verbose", false, "Print out output when invoked")
@@ -43,6 +43,17 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		// Add main.go file under /cmd
+		if file == "cmd"{
+			f, err := os.Create(total_path + "/main.go")
+			if err != nil {
+				log.Fatal(err)
+			}
+			f.WriteString("package main")
+			defer f.Close()
+		}
+
 		if *verbose || *verboseShortHand{
 			fmt.Printf("Added %s folder.\n", file)
 		}
