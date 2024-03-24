@@ -31,17 +31,8 @@ func main() {
 
 	flag.Parse()
 
-	// Adding a for each loop to find args that contains a "/"
-	for i := 0; i < flag.NArg(); i++ {
-		args := flag.Arg(i)
-		if strings.Contains(args, "/"){
-			// sentence = args
-			cmd := exec.Command("go", "mod", "init", args)
-			if err := cmd.Run(); err != nil {
-				log.Fatal(err)
-			}
-		}
-	}
+	// Create Go mod function
+	CreateGoMod()
 
 	// Get current working directory
 	filepath, err := os.Getwd()
@@ -59,6 +50,7 @@ func main() {
 
 		// Add main.go file under /cmd
 		if file == "cmd"{
+			// Function to create main.go
 			CreateMainGo(total_path)
 		}
 		if verbose{
@@ -66,9 +58,23 @@ func main() {
 		}
 	}
 
-	// Read Directory after reading
+	// Read Directory after reading function
 	ReadCreatedDir(filepath)
 
+}
+
+func CreateGoMod()  {
+	// Adding a for each loop to find args that contains a "/"
+	for i := 0; i < flag.NArg(); i++ {
+		args := flag.Arg(i)
+		if strings.Contains(args, "/"){
+			// sentence = args
+			cmd := exec.Command("go", "mod", "init", args)
+			if err := cmd.Run(); err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
 }
 
 func CreateMainGo(total_path string) {
