@@ -59,12 +59,7 @@ func main() {
 
 		// Add main.go file under /cmd
 		if file == "cmd"{
-			f, err := os.Create(total_path + "/main.go")
-			if err != nil {
-				log.Fatal(err)
-			}
-			f.WriteString("package main")
-			defer f.Close()
+			CreateMainGo(total_path)
 		}
 		if verbose{
 			fmt.Printf("Added %s directory.\n", file)
@@ -74,6 +69,15 @@ func main() {
 	// Read Directory after reading
 	ReadCreatedDir(filepath)
 
+}
+
+func CreateMainGo(total_path string) {
+	f, err := os.Create(total_path + "/main.go")
+	if err != nil {
+		log.Fatal(err)
+	}
+	f.WriteString("package main")
+	defer f.Close()
 }
 
 func ReadCreatedDir(filepath string) {
