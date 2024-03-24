@@ -19,6 +19,8 @@ func main() {
 	// Add verbose Flags
 	verbose := flag.Bool("verbose", false, "Print out output when invoked")
 	verboseShortHand := flag.Bool("v", false, "Print out output when invoked")
+	readme := flag.Bool("readme", false, "Creates a README.md file")
+	readmeShortHand := flag.Bool("re", false, "Creates a README.md file")
 
 	flag.Parse()
 
@@ -35,6 +37,13 @@ func main() {
 				*verbose = true
 			case "-v":
 				*verboseShortHand = true
+			// Readme flags
+			case "--readme":
+				*readme = true
+				fmt.Println("Readme is : ", *readme)
+			case "-re":
+				*readmeShortHand = true
+				fmt.Println("Readme is : ", *readmeShortHand)
 			// Added a go mod init case 
 			case sentence:
 				cmd := exec.Command("go", "mod", "init", sentence)
@@ -52,7 +61,6 @@ func main() {
 
 	// Add Directory after getting current directory
 	for _, file := range files_add{
-
 		total_path := filepath + "/" +file
 		err := os.Mkdir(total_path, fs.FileMode(file_perm))
 		if err != nil {
