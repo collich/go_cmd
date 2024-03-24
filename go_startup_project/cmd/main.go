@@ -37,13 +37,17 @@ func main() {
 
 	// Adding a for each loop and switch to check for flags
 	for i := 0; i < flag.NArg(); i++ {
-		var sentence string
+		// var sentence string
 		args := flag.Arg(i)
 		if strings.Contains(args, "/"){
-			sentence = args
+			// sentence = args
+			cmd := exec.Command("go", "mod", "init", args)
+			if err := cmd.Run(); err != nil {
+				log.Fatal(err)
+			}
 		}
 		// Add file go.mod file
-		switch args{
+		// switch args{
 			// case "--verbose":
 			// 	*verbose = true
 			// case "-v":
@@ -56,12 +60,12 @@ func main() {
 			// 	*readmeShortHand = true
 			// 	fmt.Println("Readme is : ", *readmeShortHand)
 			// Added a go mod init case 
-			case sentence:
-				cmd := exec.Command("go", "mod", "init", sentence)
-				if err := cmd.Run(); err != nil {
-					log.Fatal(err)
-				}
-		}
+		// 	case sentence:
+		// 		cmd := exec.Command("go", "mod", "init", sentence)
+		// 		if err := cmd.Run(); err != nil {
+		// 			log.Fatal(err)
+		// 		}
+		// }
 	}
 
 	// Get current working directory
