@@ -16,20 +16,10 @@ func main() {
 	files_add := []string{"bin", "cmd", "internal", "tests"}
 	file_perm := 0751
 	verbose := false
+	verbosePtr := &verbose
 
-	// Add verbose Flags
-	flag.BoolFunc("verbose", "Print out output when invoked", func (s string) error {
-		verbose = true
-		return nil
-	})
-	flag.BoolFunc("v", "Print out output when invoked", func (s string) error {
-		verbose = true
-		return nil
-	})
-	flag.BoolFunc("readme", "Creates a README.md file", CreateREADME)
-	flag.BoolFunc("re", "Creates a README.md file", CreateREADME)
-
-	flag.Parse()
+	// Flag Function
+	FlagFunc(verbosePtr)
 
 	// Create Go mod function
 	CreateGoMod()
@@ -61,6 +51,22 @@ func main() {
 	// Read Directory after reading function
 	ReadCreatedDir(filepath)
 
+}
+
+func FlagFunc(verbose *bool) {
+		// Add verbose Flags
+		flag.BoolFunc("verbose", "Print out output when invoked", func (s string) error {
+			*verbose = true
+			return nil
+		})
+		flag.BoolFunc("v", "Print out output when invoked", func (s string) error {
+			*verbose = true
+			return nil
+		})
+		flag.BoolFunc("readme", "Creates a README.md file", CreateREADME)
+		flag.BoolFunc("re", "Creates a README.md file", CreateREADME)
+	
+		flag.Parse()
 }
 
 func CreateGoMod()  {
