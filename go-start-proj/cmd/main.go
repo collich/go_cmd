@@ -24,11 +24,7 @@ func main() {
 	// Create Go mod function
 	CreateGoMod()
 
-	// Get current working directory
-	filepath, err := os.Getwd()
-	if err != nil{
-		log.Fatal(err)
-	}
+	filepath := GetFilePath()
 
 	// Add Directory after getting current directory
 	for _, file := range files_add{
@@ -51,6 +47,15 @@ func main() {
 	// Read Directory after reading function
 	ReadCreatedDir(filepath)
 
+}
+
+func GetFilePath() string {
+	// Get current working directory
+	filepath, err := os.Getwd()
+	if err != nil{
+		log.Fatal(err)
+	}
+	return filepath
 }
 
 func FlagFunc(verbose *bool) {
