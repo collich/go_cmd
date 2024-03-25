@@ -37,6 +37,7 @@ func main() {
 
 func AddingDir(files_add []string, filepath string, file_perm int, verbose *bool)  {
 	// Add Directory after getting current directory
+	goFile := ""
 	for _, file := range files_add{
 		total_path := filepath + "/" +file
 		err := os.Mkdir(total_path, fs.FileMode(file_perm))
@@ -47,8 +48,15 @@ func AddingDir(files_add []string, filepath string, file_perm int, verbose *bool
 		// Add main.go file under /cmd
 		if file == "cmd"{
 			// Function to create main.go
-			CreateMainGo(total_path)
+			goFile = "main"
+			CreateGoFile(total_path + "/main.go", goFile)
+		} 
+			
+		if file == "tests"{
+			goFile = "tests"
+			CreateGoFile(total_path + "/test.go", goFile)
 		}
+
 		if *verbose{
 			fmt.Printf("Added %s directory.\n", file)
 		}
@@ -94,12 +102,12 @@ func CreateGoMod()  {
 	}
 }
 
-func CreateMainGo(total_path string) {
-	f, err := os.Create(total_path + "/main.go")
+func CreateGoFile(total_path string, goFile string) {
+	f, err := os.Create(total_path)
 	if err != nil {
 		log.Fatal(err)
 	}
-	f.WriteString("package main")
+	f.WriteString("package " + goFile)
 	defer f.Close()
 }
 
