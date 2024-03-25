@@ -24,8 +24,18 @@ func main() {
 	// Create Go mod function
 	CreateGoMod()
 
+	// Getting a file path
 	filepath := GetFilePath()
 
+	// Directory adding Function
+	AddingDir(files_add, filepath, file_perm, verbosePtr)
+
+	// Read Directory after reading function
+	ReadCreatedDir(filepath)
+
+}
+
+func AddingDir(files_add []string, filepath string, file_perm int, verbose *bool)  {
 	// Add Directory after getting current directory
 	for _, file := range files_add{
 		total_path := filepath + "/" +file
@@ -39,14 +49,10 @@ func main() {
 			// Function to create main.go
 			CreateMainGo(total_path)
 		}
-		if verbose{
+		if *verbose{
 			fmt.Printf("Added %s directory.\n", file)
 		}
 	}
-
-	// Read Directory after reading function
-	ReadCreatedDir(filepath)
-
 }
 
 func GetFilePath() string {
