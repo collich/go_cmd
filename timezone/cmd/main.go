@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"timezone/internal/resdata"
 )
 
 func main()  {
@@ -27,5 +28,7 @@ func main()  {
 	if json.Unmarshal(body, &timezone) != nil{
 		log.Panicf("Unable to parse json")
 	}
+
+	resdata.TimeZoneList(timezone)
 }
 
