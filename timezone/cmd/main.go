@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -28,8 +27,5 @@ func main()  {
 	if json.Unmarshal(body, &timezone) != nil{
 		log.Panicf("Unable to parse json")
 	}
-
-	for _, i := range timezone{
-		fmt.Println(i)
-	}
 }
+
