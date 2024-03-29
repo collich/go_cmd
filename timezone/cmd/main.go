@@ -1,7 +1,8 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
 )
@@ -16,5 +17,11 @@ func main()  {
 	if res.StatusCode != 200{
 		log.Panicf("Got Status code: %d", res.StatusCode)
 	}
+	
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	fmt.Print(string(body))
 }
