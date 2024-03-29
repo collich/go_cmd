@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -8,6 +9,7 @@ import (
 )
 
 func main()  {
+	var timezone []string
 	res, err := http.Get("http://worldtimeapi.org/api/timezone")
 	if err != nil {
 		log.Fatal(err)
@@ -23,5 +25,11 @@ func main()  {
 		log.Fatal(err)
 	}
 
-	fmt.Print(string(body))
+	if json.Unmarshal(body, &timezone) != nil{
+		log.Panicf("Unable to parse json")
+	}
+
+	for _, i := range timezone{
+		fmt.Println(i)
+	}
 }
