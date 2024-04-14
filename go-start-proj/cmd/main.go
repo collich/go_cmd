@@ -107,7 +107,8 @@ func CreateGoFile(total_path string, goFile string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	f.WriteString("package " + goFile)
+	f.WriteString("package " + goFile + "\n\n")
+	f.WriteString("func main() {\n\n}")
 	defer f.Close()
 }
 
